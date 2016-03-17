@@ -1,0 +1,43 @@
+{
+    "id": "nl.webchitect.newsheadlines",
+    "name": {
+        "en": "News headlines"
+    },
+    "version": "0.0.1",
+    "compatibility": "0.x || 1.x",
+    "author": {
+        "name": "Christian Versloot",
+        "email": "mail@christianversloot.nl"
+    },
+    "images": {
+        "large": "./assets/images/large.jpg",
+        "small": "./assets/images/small.jpg"
+    },
+    "permissions": [
+        "homey:manager:speech-input",
+        "homey:manager:speech-output"
+    ],
+    "description": "This app tells you the most recent news headlines.",
+    "speech": [
+        {
+            "id": "newsheadline",
+            "importance": 0.8,
+            "triggers": {
+                "en": ["news headline", "news headlines", "headline", "headlines", "recent news", "what is the news", "news please"]
+            }
+        }
+    ],
+    "category": "internet",
+    "contributors": {
+        "developers": [
+            {
+                "name": "Christian Versloot",
+                "email": "mail@christianversloot.nl"
+            }
+        ],
+        "translators": [
+            
+        ]
+    }
+}
+
