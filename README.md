@@ -1,6 +1,7 @@
 # News headlines
         
 This app tells you the most recent news headlines.
+Source: Euronews
 
 Example questions to ask homey:
 OK, Homey...

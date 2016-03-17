@@ -27,17 +27,6 @@
             }
         }
     ],
-    "category": "internet",
-    "contributors": {
-        "developers": [
-            {
-                "name": "Christian Versloot",
-                "email": "mail@christianversloot.nl"
-            }
-        ],
-        "translators": [
-            
-        ]
-    }
+    "category": "internet"
 }
 
