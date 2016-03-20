@@ -17,7 +17,9 @@
         "homey:manager:speech-input",
         "homey:manager:speech-output"
     ],
-    "description": "This app tells you the most recent news headlines.",
+    "description": {
+      "en": "This app tells you the most recent news headlines."
+    },
     "speech": [
         {
             "id": "newsheadline",
