@@ -9,6 +9,15 @@
         "name": "Christian Versloot",
         "email": "mail@christianversloot.nl"
     },
+    "contributors": {
+        "developers": [
+            {
+                "name": "Matjaž Lipuš",
+                "website": "http://matjaz.info",
+                "email": "matjazl@gmail.com"
+            }
+        ]
+    },
     "images": {
         "large": "./assets/images/large.jpg",
         "small": "./assets/images/small.jpg"
