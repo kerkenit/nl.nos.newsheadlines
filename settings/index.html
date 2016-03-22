@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+
+    </head>
+    <body>
+
+        <h1>News headlines (<i>nl.webchitect.newsheadlines</i>)</h1>
+        <p>On this page, you will be able to adjust the settings of the News headlines app.</p>
+
+        <fieldset>
+            <legend>Settings</legend>
+
+            <div class="field row">
+                <label for="test">Amount of news articles Homey curates (min 1, max 8)</label>
+                <input id="numberOfNewsArticles" type="number" value="" min="1" max="8" />
+            </div>
+
+        </fieldset>
+
+        <button class="right" onclick="save()">Save changes</button>
+
+        <script type="text/javascript">
+        function onHomeyReady(){
+            document.getElementById('numberOfNewsArticles').value = Homey.get('numberOfNewsArticles');
+            Homey.ready()
+        }
+
+        function save() {
+            Homey.set('numberOfNewsArticles', document.getElementById('numberOfNewsArticles').value);
+        }
+        </script>
+
+    </body>
+</html>

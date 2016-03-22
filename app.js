@@ -2,6 +2,10 @@
 
 exports.init = function () {
 
+	// Set the standard number of news headlines to 3
+	Homey.manager('settings').set('numberOfNewsArticles', 3);
+	var headlineKeywords = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'];
+
 	// Homey checks for the news headlines to be triggered
 	// i.e. through phrases like
 	// What are the news headlines?
@@ -22,10 +26,13 @@ exports.init = function () {
 
 					// Concatenate everything
 					var newsHeadlines = [];
+					var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
+						maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
 					newsHeadlines.push('Your recent news headlines.');
-					newsHeadlines.push('One: ' + data.responseData.feed.entries[0].title);
-					newsHeadlines.push('Two: ' + data.responseData.feed.entries[1].title);
-					newsHeadlines.push('Three: ' + data.responseData.feed.entries[2].title);
+
+					for(var i = 0; i < maxNews; i++) {
+						newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
+					}
 					
 					// Spread the word
 					for(var i = 0; i < newsHeadlines.length; i++) {
