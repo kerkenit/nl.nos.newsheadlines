@@ -24,8 +24,7 @@
     },
     "permissions": [
         "homey:manager:speech-input",
-        "homey:manager:speech-output",
-        "homey:manager:settings"
+        "homey:manager:speech-output"
     ],
     "description": {
       "en": "This app tells you the most recent news headlines."
