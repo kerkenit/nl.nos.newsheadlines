@@ -9,6 +9,15 @@
         "name": "Christian Versloot",
         "email": "mail@christianversloot.nl"
     },
+    "contributors": {
+        "developers": [
+            {
+                "name": "Matjaž Lipuš",
+                "website": "http://matjaz.info",
+                "email": "matjazl@gmail.com"
+            }
+        ]
+    },
     "images": {
         "large": "./assets/images/large.jpg",
         "small": "./assets/images/small.jpg"
@@ -17,7 +26,9 @@
         "homey:manager:speech-input",
         "homey:manager:speech-output"
     ],
-    "description": "This app tells you the most recent news headlines.",
+    "description": {
+      "en": "This app tells you the most recent news headlines."
+    },
     "speech": [
         {
             "id": "newsheadline",

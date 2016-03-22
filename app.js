@@ -1,6 +1,6 @@
 "use strict";
 
-function init() {
+exports.init = function () {
 
 	// Homey checks for the news headlines to be triggered
 	// i.e. through phrases like
@@ -15,48 +15,21 @@ function init() {
 			// Check if the newsheadline trigger is triggered
 			if(trigger.id === 'newsheadline') {
 
-				// Log that a trigger is detected
-				console.log("News headline trigger detected");
-
-				// Instantiate variables
-				var dataSource,
-					parsedJSON,
-					newsHeadlines,
-					request = require('request');
-
 				// Download news headlines in JSON format,
-				// after which we parse the JSON
 				// and formulate the news headlines
-				console.log('News headlines are being downloaded');
-				request('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/', function(error,response,body) {
+				Homey.log('News headlines are being downloaded');
+				require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
 
-					// Check for correctness
-					if(!error && response.statusCode == 200) {
-
-						// Log the success
-						console.log('News headlines downloaded successfully');
-
-						// Parse the XML
-						parsedJSON = JSON.parse(body);
-
-						// Concatenate everything
-						newsHeadlines = [];
-						newsHeadlines.push('Your recent news headlines.');
-						newsHeadlines.push('One: ' + parsedJSON.responseData.feed.entries[0].title);
-						newsHeadlines.push('Two: ' + parsedJSON.responseData.feed.entries[1].title);
-						newsHeadlines.push('Three: ' + parsedJSON.responseData.feed.entries[2].title);
-						
-						// Spread the word
-						for(var i = 0; i < newsHeadlines.length; i++) {
-							Homey.manager('speech-output').say(__(newsHeadlines[i]));
-						}
-
-					}
-					else {
-
-						console.log('Errors have been detected');
-						console.log(error);
-
+					// Concatenate everything
+					var newsHeadlines = [];
+					newsHeadlines.push('Your recent news headlines.');
+					newsHeadlines.push('One: ' + data.responseData.feed.entries[0].title);
+					newsHeadlines.push('Two: ' + data.responseData.feed.entries[1].title);
+					newsHeadlines.push('Three: ' + data.responseData.feed.entries[2].title);
+					
+					// Spread the word
+					for(var i = 0; i < newsHeadlines.length; i++) {
+						Homey.manager('speech-output').say(__(newsHeadlines[i]));
 					}
 
 				});
@@ -66,6 +39,4 @@ function init() {
 
 	});
 	
-}
-
-module.exports.init = init;
+};
