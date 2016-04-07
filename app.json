@@ -12,7 +12,7 @@
     "flow": {
         "triggers": [
             {
-                "id": "newsheadline_contains",
+                "id": "trigger.newsheadline_contains",
                 "title": {
                     "en": "The headlines contain"
                 },
@@ -27,7 +27,7 @@
         ],
         "conditions": [
             {
-                "id": "newsheadline_contains",
+                "id": "condition.newsheadline_contains",
                 "title": {
                     "en": "The headlines contain"
                 },
