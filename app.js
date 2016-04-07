@@ -19,6 +19,7 @@ exports.init = function () {
 				}
 			}
 		});
+		console.log('The args "'+args.when+'" are not present in any of the news headlines.');
 		return callback(null, false);
 	});
 
@@ -35,6 +36,7 @@ exports.init = function () {
 				}
 			}
 		});
+		console.log('The args "'+args.when+'" are not present in any of the news headlines.');
 		return callback(null, false);
 	});
 

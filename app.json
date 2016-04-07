@@ -10,36 +10,14 @@
         "email": "mail@christianversloot.nl"
     },
     "flow": {
-        "triggers": [
-            {
-                "id": "newsheadline_contains",
-                "title": {
-                    "en": "The headlines contain"
-                },
-                "args": [
-                    {
-                        "name": "when",
-                        "type": "text",
-                        "placeholder": "word(s)"
-                    }
-                ]
-            }
-        ],
-        "conditions": [
-            {
-                "id": "newsheadline_contains",
-                "title": {
-                    "en": "The headlines contain"
-                },
-                "args": [
-                    {
-                        "name": "when",
-                        "type": "text",
-                        "placeholder": "word(s)"
-                    }
-                ]
-            }
-        ]
+         "actions": [
+                      {
+                        "id": "readNews",
+                        "title": {
+                          "en": "Read the news"
+                        }
+                      }
+                    ]
     },
     "contributors": {
         "developers": [
