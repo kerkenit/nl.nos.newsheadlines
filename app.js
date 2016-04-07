@@ -12,14 +12,14 @@ exports.init = function () {
 		var result = false;
 		require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
 			for(var i = 0; i < 8; i++) {
-				if(data.responseData.feed.entries[i].title.indexOf(args.when) > -1) {
+				if(data.responseData.feed.entries[i].title.toLowerCase().indexOf(args.when) > -1) {
 					console.log('The args "'+args.when+'" are present in headline: ' + data.responseData.feed.entries[i].title);
-					result=true;
+					return callback(null, true);
 					break;
 				}
 			}
-			callback(null, result);
 		});
+		return callback(null, false);
 	});
 
 	// Homey checks for the flow trigger
@@ -28,14 +28,14 @@ exports.init = function () {
 		var result = false;
 		require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
 			for(var i = 0; i < 8; i++) {
-				if(data.responseData.feed.entries[i].title.indexOf(args.when) > -1) {
+				if(data.responseData.feed.entries[i].title.toLowerCase().indexOf(args.when) > -1) {
 					console.log('The args "'+args.when+'" are present in headline: ' + data.responseData.feed.entries[i].title);
-					result=true;
+					return callback(null, true);
 					break;
 				}
 			}
-			callback(null, result);
 		});
+		return callback(null, false);
 	});
 
 	// Homey checks for the news headlines to be triggered
