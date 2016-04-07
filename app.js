@@ -33,7 +33,7 @@ exports.init = function () {
 					for(var i = 0; i < maxNews; i++) {
 						newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
 					}
-					
+
 					// Spread the word
 					for(var i = 0; i < newsHeadlines.length; i++) {
 						Homey.manager('speech-output').say(__(newsHeadlines[i]));
@@ -45,5 +45,5 @@ exports.init = function () {
 		});
 
 	});
-	
+
 };

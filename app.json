@@ -9,6 +9,24 @@
         "name": "Christian Versloot",
         "email": "mail@christianversloot.nl"
     },
+    "flow": {
+        "triggers": [
+            {
+                "id": "newsheadline_contains",
+                "title": {
+                    "en": "The headlines contain"
+                },
+                "args": [
+                    {
+                        "name": "when",
+                        "type": "text",
+                        "placeholder": "word(s)"
+                    }
+                ]
+            }
+        ],
+        "conditions": []
+    },
     "contributors": {
         "developers": [
             {
