@@ -19,7 +19,7 @@ exports.init = function () {
 				}
 			}
 			callback(null, result);
-		}
+		});
 	});
 
 	// Homey checks for the flow trigger
@@ -35,7 +35,7 @@ exports.init = function () {
 				}
 			}
 			callback(null, result);
-		}
+		});
 	});
 
 	// Homey checks for the news headlines to be triggered
