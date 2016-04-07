@@ -7,7 +7,7 @@ exports.init = function () {
 	var headlineKeywords = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'];
 
 	// Homey checks if it should read the news
-	Homey.manager('flow').on('condition.readNews', function(callback) {
+	Homey.manager('flow').on('action.readNews', function(callback) {
 		// Read the news
 		// Download news headlines in JSON format,
 		// and formulate the news headlines
