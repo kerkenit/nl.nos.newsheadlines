@@ -6,38 +6,12 @@ exports.init = function () {
 	Homey.manager('settings').set('numberOfNewsArticles', 3);
 	var headlineKeywords = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'];
 
-	// Homey checks for the flow condition
-	// whether one of the headlines contains certain words
-	Homey.manager('flow').on('condition.newsheadline_contains', function( callback, args ){
-		var result = false;
-		require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
-			for(var i = 0; i < 8; i++) {
-				if(data.responseData.feed.entries[i].title.toLowerCase().indexOf(args.when) > -1) {
-					console.log('The args "'+args.when+'" are present in headline: ' + data.responseData.feed.entries[i].title);
-					return callback(null, true);
-					break;
-				}
-			}
-		});
-		console.log('The args "'+args.when+'" are not present in any of the news headlines.');
-		return callback(null, false);
-	});
-
-	// Homey checks for the flow trigger
-	// whether one of the headlines contains certain words
-	Homey.manager('flow').on('trigger.newsheadline_contains', function( callback, args ){
-		var result = false;
-		require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
-			for(var i = 0; i < 8; i++) {
-				if(data.responseData.feed.entries[i].title.toLowerCase().indexOf(args.when) > -1) {
-					console.log('The args "'+args.when+'" are present in headline: ' + data.responseData.feed.entries[i].title);
-					return callback(null, true);
-					break;
-				}
-			}
-		});
-		console.log('The args "'+args.when+'" are not present in any of the news headlines.');
-		return callback(null, false);
+	// Homey checks if it should read the news
+	Homey.manager('flow').on('condition.readNews', function(callback) {
+		// Read the news
+		readTheNews();
+		// Callback
+		callback();
 	});
 
 	// Homey checks for the news headlines to be triggered
@@ -45,39 +19,40 @@ exports.init = function () {
 	// What are the news headlines?
 	// What is the recent news?
 	Homey.manager('speech-input').on('speech', function(speech,callback) {
-
 		// Iterate over every possible trigger as specified in
 		// app.json
 		speech.triggers.forEach(function(trigger) {
-
-			// Check if the newsheadline trigger is triggered
+		// Check if the newsheadline trigger is triggered
 			if(trigger.id === 'newsheadline') {
-
-				// Download news headlines in JSON format,
-				// and formulate the news headlines
-				Homey.log('News headlines are being downloaded');
-				require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
-
-					// Concatenate everything
-					var newsHeadlines = [];
-					var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
-						maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
-					newsHeadlines.push('Your recent news headlines.');
-
-					for(var i = 0; i < maxNews; i++) {
-						newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
-					}
-
-					// Spread the word
-					for(var i = 0; i < newsHeadlines.length; i++) {
-						Homey.manager('speech-output').say(__(newsHeadlines[i]));
-					}
-
-				});
-
+				// Read the news
+				readTheNews();
 			}
 		});
 
 	});
 
 };
+
+function readTheNews() {
+	// Download news headlines in JSON format,
+	// and formulate the news headlines
+	Homey.log('News headlines are being downloaded');
+	require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
+
+		// Concatenate everything
+		var newsHeadlines = [];
+		var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
+			maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
+		newsHeadlines.push('Your recent news headlines.');
+
+		for(var i = 0; i < maxNews; i++) {
+			newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
+		}
+
+		// Spread the word
+		for(var i = 0; i < newsHeadlines.length; i++) {
+			Homey.manager('speech-output').say(__(newsHeadlines[i]));
+		}
+
+	});
+}
