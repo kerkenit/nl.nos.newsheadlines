@@ -25,7 +25,21 @@
                 ]
             }
         ],
-        "conditions": []
+        "conditions": [
+            {
+                "id": "newsheadline_contains",
+                "title": {
+                    "en": "The headlines contain"
+                },
+                "args": [
+                    {
+                        "name": "when",
+                        "type": "text",
+                        "placeholder": "word(s)"
+                    }
+                ]
+            }
+        ]
     },
     "contributors": {
         "developers": [
