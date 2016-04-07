@@ -27,18 +27,22 @@
             });
             Homey.ready();
         }
-
         function save() {
-            // TODO : max min news articles correct save && display correctly in value of input box immedaitely
-            var newsArticles = document.getElementById('numberOfNewsArticles').value,
-                button = document.getElementById('saver'),
+            // Retrieve DOM elements
+            var button = document.getElementById('saver'),
                 newsBlock = document.getElementById('numberOfNewsArticles');
+            // Set both disabled onSave
             button.disabled = true;
             newsBlock.disabled = true;
+            // Define update status
             var update = "true";
+            // Check if news articles exceed limit; change status if the case
             if (newsArticles > 8) { update = "trueHigh" };
             if (newsArticles < 1) { update = "trueLow" };
+            // Validate the number of news articles and change if necessary
             var validatedNewsArticles = (newsArticles > 8 ? 8 : (newsArticles < 1 ? 1 : newsArticles));
+            document.getElementById('numberOfNewsArticles').value=validatedNewsArticles;
+            // Show message in the save button
             if(update === "true") {
                 button.innerHTML = "Changes saved";
             }
@@ -48,12 +52,14 @@
             else {
                 button.innerHTML = "Changes saved, but selected no. of articles was set to minimum value of 1"
             }
+            // Change the settings in Homey.
+            Homey.set('numberOfNewsArticles', validatedNewsArticles);
+            // Return to edit mode after 3.5 seconds
             setTimeout(function() {
                 button.disabled = false;
                 newsBlock.disabled = false;
                 button.innerHTML = "Save changes"
-            },3000);
-            Homey.set('numberOfNewsArticles', newsArticles);
+            },3500);
         }
         </script>
 
