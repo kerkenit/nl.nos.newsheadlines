@@ -37,10 +37,10 @@
             // Define update status
             var update = "true";
             // Check if news articles exceed limit; change status if the case
-            if (newsArticles > 8) { update = "trueHigh" };
-            if (newsArticles < 1) { update = "trueLow" };
+            if (newsBlock.value > 8) { update = "trueHigh" };
+            if (newsBlock.value < 1) { update = "trueLow" };
             // Validate the number of news articles and change if necessary
-            var validatedNewsArticles = (newsArticles > 8 ? 8 : (newsArticles < 1 ? 1 : newsArticles));
+            var validatedNewsArticles = (newsBlock.value > 8 ? 8 : (newsBlock.value < 1 ? 1 : newsBlock.value));
             document.getElementById('numberOfNewsArticles').value=validatedNewsArticles;
             // Show message in the save button
             if(update === "true") {
