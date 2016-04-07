@@ -18,16 +18,42 @@
 
         </fieldset>
 
-        <button class="right" onclick="save()">Save changes</button>
+        <button class="right" id="saver" onclick="save()">Save changes</button>
 
         <script type="text/javascript">
         function onHomeyReady(){
-            document.getElementById('numberOfNewsArticles').value = Homey.get('numberOfNewsArticles');
-            Homey.ready()
+            Homey.get('numberOfNewsArticles', function(err,data) {
+                document.getElementById('numberOfNewsArticles').value = data;
+            });
+            Homey.ready();
         }
 
         function save() {
-            Homey.set('numberOfNewsArticles', document.getElementById('numberOfNewsArticles').value);
+            // TODO : max min news articles correct save && display correctly in value of input box immedaitely
+            var newsArticles = document.getElementById('numberOfNewsArticles').value,
+                button = document.getElementById('saver'),
+                newsBlock = document.getElementById('numberOfNewsArticles');
+            button.disabled = true;
+            newsBlock.disabled = true;
+            var update = "true";
+            if (newsArticles > 8) { update = "trueHigh" };
+            if (newsArticles < 1) { update = "trueLow" };
+            var validatedNewsArticles = (newsArticles > 8 ? 8 : (newsArticles < 1 ? 1 : newsArticles));
+            if(update === "true") {
+                button.innerHTML = "Changes saved";
+            }
+            else if(update === "trueHigh") {
+                button.innerHTML = "Changes saved, but selected no. of articles was reduced to maximum value of 8";
+            }
+            else {
+                button.innerHTML = "Changes saved, but selected no. of articles was set to minimum value of 1"
+            }
+            setTimeout(function() {
+                button.disabled = false;
+                newsBlock.disabled = false;
+                button.innerHTML = "Save changes"
+            },3000);
+            Homey.set('numberOfNewsArticles', newsArticles);
         }
         </script>
 
