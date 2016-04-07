@@ -9,7 +9,27 @@ exports.init = function () {
 	// Homey checks if it should read the news
 	Homey.manager('flow').on('condition.readNews', function(callback) {
 		// Read the news
-		readTheNews();
+		// Download news headlines in JSON format,
+		// and formulate the news headlines
+		Homey.log('News headlines are being downloaded');
+		require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
+
+			// Concatenate everything
+			var newsHeadlines = [];
+			var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
+				maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
+			newsHeadlines.push('Your recent news headlines.');
+
+			for(var i = 0; i < maxNews; i++) {
+				newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
+			}
+
+			// Spread the word
+			for(var i = 0; i < newsHeadlines.length; i++) {
+				Homey.manager('speech-output').say(__(newsHeadlines[i]));
+			}
+
+		});
 		// Callback
 		callback();
 	});
@@ -25,7 +45,27 @@ exports.init = function () {
 		// Check if the newsheadline trigger is triggered
 			if(trigger.id === 'newsheadline') {
 				// Read the news
-				readTheNews();
+				// Download news headlines in JSON format,
+				// and formulate the news headlines
+				Homey.log('News headlines are being downloaded');
+				require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
+
+					// Concatenate everything
+					var newsHeadlines = [];
+					var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
+						maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
+					newsHeadlines.push('Your recent news headlines.');
+
+					for(var i = 0; i < maxNews; i++) {
+						newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
+					}
+
+					// Spread the word
+					for(var i = 0; i < newsHeadlines.length; i++) {
+						Homey.manager('speech-output').say(__(newsHeadlines[i]));
+					}
+
+				});
 			}
 		});
 
@@ -33,26 +73,3 @@ exports.init = function () {
 
 };
 
-function readTheNews() {
-	// Download news headlines in JSON format,
-	// and formulate the news headlines
-	Homey.log('News headlines are being downloaded');
-	require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
-
-		// Concatenate everything
-		var newsHeadlines = [];
-		var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
-			maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
-		newsHeadlines.push('Your recent news headlines.');
-
-		for(var i = 0; i < maxNews; i++) {
-			newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
-		}
-
-		// Spread the word
-		for(var i = 0; i < newsHeadlines.length; i++) {
-			Homey.manager('speech-output').say(__(newsHeadlines[i]));
-		}
-
-	});
-}
