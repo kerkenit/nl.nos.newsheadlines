@@ -2,9 +2,9 @@
 
 exports.init = function () {
 
-	// Set the standard number of news headlines to 5
-	Homey.manager('settings').set('numberOfNewsArticles', 5);
-	var headlineKeywords = ['Een', 'Twee', 'Drie', 'Vier', 'Vijf', 'Zes', 'Zeven', 'Acht', 'Negen', 'Tien', 'Elf', 'Twaalf', 'Dertien', 'Veertien', 'Vijftien', 'Zestien', 'Zeventien', 'Actien', 'Negentien', 'Twintig'];
+	// Set the standard number of news headlines to 3
+	Homey.manager('settings').set('numberOfNewsArticles', 3);
+	var headlineKeywords = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'];
 
 	// Homey checks if it should read the news
 	Homey.manager('flow').on('action.readNews', function(callback) {
@@ -12,26 +12,16 @@ exports.init = function () {
 		// Download news headlines in JSON format,
 		// and formulate the news headlines
 		Homey.log('News headlines are being downloaded');
-		require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.nos.nl/nosjournaal').then(function (data) {
+		require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
 
 			// Concatenate everything
 			var newsHeadlines = [];
 			var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
 				maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
-			newsHeadlines.push('Je recente nieuws berichten.');
+			newsHeadlines.push('Your recent news headlines.');
 
 			for(var i = 0; i < maxNews; i++) {
-				var title = data.responseData.feed.entries[i].title;
-				if (title[title.length-1] === ".") {
-					title = title.slice(0,-1);
-				}
-				var content = data.responseData.feed.entries[i].content;
-				if (content[content.length-1] === ".") {
-					content = content.slice(0,-1);
-				}
-				newsHeadlines.push(headlineKeywords[i] + '. ' + title + '. ' + content + '........ ');
-				title = null;
-				content = null;
+				newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
 			}
 
 			// Spread the word
@@ -58,26 +48,16 @@ exports.init = function () {
 				// Download news headlines in JSON format,
 				// and formulate the news headlines
 				Homey.log('News headlines are being downloaded');
-				require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.nos.nl/nosjournaal').then(function (data) {
+				require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.feedburner.com/euronews/en/news/').then(function (data) {
 
 					// Concatenate everything
 					var newsHeadlines = [];
 					var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
 						maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
-					newsHeadlines.push('Je recente nieuws berichten.');
+					newsHeadlines.push('Your recent news headlines.');
 
 					for(var i = 0; i < maxNews; i++) {
-						var title = data.responseData.feed.entries[i].title;
-						if (title[title.length-1] === ".") {
-							title = title.slice(0,-1);
-						}
-						var content = data.responseData.feed.entries[i].content;
-						if (content[content.length-1] === ".") {
-							content = content.slice(0,-1);
-						}
-						newsHeadlines.push(headlineKeywords[i] + '. ' + title + '. ' + content + '........ ');
-						title = null;
-						content = null;
+						newsHeadlines.push(headlineKeywords[i] + ': ' + data.responseData.feed.entries[i].title);
 					}
 
 					// Spread the word
