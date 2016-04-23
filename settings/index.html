@@ -5,23 +5,23 @@
     </head>
     <body>
 
-        <h1>News headlines (<i>nl.webchitect.newsheadlines</i>)</h1>
-        <p>On this page, you will be able to adjust the settings of the News headlines app.</p>
+        <h1>NOS Headlines</h1>
+        <p>Op deze pagina zijn de instellingen aan te passen van de NOS Headlines app</p>
 
         <p id="error" style="color: red;"></p>
         <p id="success" style="color: #5fd225;"></p>
 
         <fieldset>
-            <legend>Settings</legend>
+            <legend>Instellingen</legend>
 
             <div class="field row">
-                <label for="test">#Articles (max 8)</label>
-                <input id="numberOfNewsArticles" type="number" value="" min="1" max="8" />
+                <label for="numberOfNewsArticles">Aantals Berichten (max 20)</label>
+                <input id="numberOfNewsArticles" name="numberOfNewsArticles" type="number" value="" min="1" max="20" />
             </div>
 
         </fieldset>
 
-        <button class="right" id="saver" onclick="save()">Save changes</button>
+        <button class="right" id="saver" onclick="save()">Opslaan</button>
 
         <script type="text/javascript">
         function onHomeyReady(){

@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
 	"id": "nl.nos.headlines",
 	"name": {
 		"nl": "NOS Headlines",
@@ -51,57 +50,3 @@
 	}],
 	"category": "internet"
 }
-=======
-    "id": "nl.webchitect.newsheadlines",
-    "name": {
-        "en": "News headlines"
-    },
-    "version": "0.0.3",
-    "compatibility": "0.x || 1.x",
-    "author": {
-        "name": "Christian Versloot",
-        "email": "mail@christianversloot.nl"
-    },
-    "flow": {
-         "actions": [
-                      {
-                        "id": "readNews",
-                        "title": {
-                          "en": "Read the news"
-                        }
-                      }
-                    ]
-    },
-    "contributors": {
-        "developers": [
-            {
-                "name": "Matjaž Lipuš",
-                "website": "http://matjaz.info",
-                "email": "matjazl@gmail.com"
-            }
-        ]
-    },
-    "images": {
-        "large": "./assets/images/large.jpg",
-        "small": "./assets/images/small.jpg"
-    },
-    "permissions": [
-        "homey:manager:speech-input",
-        "homey:manager:speech-output"
-    ],
-    "description": {
-      "en": "This app tells you the most recent news headlines."
-    },
-    "speech": [
-        {
-            "id": "newsheadline",
-            "importance": 0.8,
-            "triggers": {
-                "en": ["news headline", "news headlines", "headline", "headlines", "recent news", "what is the news", "news please"]
-            }
-        }
-    ],
-    "category": "internet"
-}
-
->>>>>>> parent of 8b66025... Transformed to NOS Headlines
