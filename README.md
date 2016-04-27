@@ -12,3 +12,7 @@ OK, Homey...
 * Het nieuws alsjeblieft
 * Lees het nieuws
 * ... En meer
+
+Opmerkingen
+* Homey kan alleen het nieuws met een Nederlandse stem uitspreken.
+* Niet Nederlandse woorden kan Homey ook niet goed uitspreken.
