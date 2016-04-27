@@ -3,7 +3,7 @@
 Deze app verteld je het laatste nieuws
 Bron: NOS
 
-Vraag gewoon aan Homey:
+# Vraag gewoon aan Homey:
 OK, Homey...
 
 * Laatste nieuws
@@ -13,6 +13,6 @@ OK, Homey...
 * Lees het nieuws
 * ... En meer
 
-Opmerkingen
+# Opmerkingen:
 * Homey kan alleen het nieuws met een Nederlandse stem uitspreken.
 * Niet Nederlandse woorden kan Homey ook niet goed uitspreken.
