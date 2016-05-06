@@ -36,7 +36,9 @@ exports.init = function () {
 					if (content[content.length - 1] === ".") {
 						content = content.slice(0, -1);
 					}
-					newsHeadlines.push(headlineKeywords[i] + '. ' + title + '. ' + content + '........ ');
+					if(title.length > 0 && content.length > 0) {
+						newsHeadlines.push(headlineKeywords[i] + '. ' + title + '. ' + content + '........ ');
+					}
 					title = null;
 					content = null;
 				}
@@ -87,7 +89,9 @@ exports.init = function () {
 							if (content[content.length-1] === ".") {
 								content = content.slice(0,-1);
 							}
-							newsHeadlines.push(headlineKeywords[i] + '. ' + title + '. ' + content + '........ ');
+							if(title.length > 0 && content.length > 0) {
+								newsHeadlines.push(headlineKeywords[i] + '. ' + title + '. ' + content + '........ ');
+							}
 							title = null;
 							content = null;
 						}
