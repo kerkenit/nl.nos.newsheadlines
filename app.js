@@ -2,9 +2,9 @@
 exports.init = function() {
 	var numberOfNewsArticles = Homey.manager('settings').get('numberOfNewsArticles');
 	if (numberOfNewsArticles === undefined || numberOfNewsArticles === null) {
+		// Set the standard number of news headlines to 20
 		Homey.manager('settings').set('numberOfNewsArticles', 5);
 	}
-	// Set the standard number of news headlines to 20
 	var headlineKeywords = [__('app.numbers.one'), __('app.numbers.two'), __('app.numbers.three'), __('app.numbers.four'), __('app.numbers.five'), __('app.numbers.six'), __('app.numbers.seven'), __('app.numbers.eight'), __('app.numbers.nine'), __('app.numbers.ten'), __('app.numbers.eleven'), __('app.numbers.twelve'), __('app.numbers.thirteen'), __('app.numbers.fourteen'), __('app.numbers.fiveteen'), __('app.numbers.sixteen'), __('app.numbers.seventeen'), __('app.numbers.eightteen'), __('app.numbers.nineteen'), __('app.numbers.twenty')];
 	// Homey checks if it should read the news
 	Homey.manager('flow').on('action.readNews', function(callback) {
@@ -17,7 +17,7 @@ exports.init = function() {
 				// Concatenate everything
 				var newsHeadlines = [];
 				var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
-				maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
+				maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
 				newsHeadlines.push(__('app.speechPrefix'));
 				for (var i = 0; i < maxNews; i++) {
 					var title = data.responseData.feed.entries[i].title;
