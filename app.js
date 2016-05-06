@@ -2,8 +2,11 @@
 
 exports.init = function () {
 
+	var numberOfNewsArticles = Homey.manager('settings').get('numberOfNewsArticles');
+	if(numberOfNewsArticles === undefined || numberOfNewsArticles === null) {
+		Homey.manager('settings').set('numberOfNewsArticles', 5);
+	}
 	// Set the standard number of news headlines to 5
-	Homey.manager('settings').set('numberOfNewsArticles', 5);
 	var headlineKeywords = ['Een', 'Twee', 'Drie', 'Vier', 'Vijf', 'Zes', 'Zeven', 'Acht', 'Negen', 'Tien', 'Elf', 'Twaalf', 'Dertien', 'Veertien', 'Vijftien', 'Zestien', 'Zeventien', 'Actien', 'Negentien', 'Twintig'];
 
 	// Homey checks if it should read the news
