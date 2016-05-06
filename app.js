@@ -24,8 +24,8 @@ exports.init = function () {
 				// Concatenate everything
 				var newsHeadlines = [];
 				var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
-					maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
 					newsHeadlines.push('Je recente nieuws berichten.');
+					maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
 
 				for(var i = 0; i < maxNews; i++) {
 					var title = data.responseData.feed.entries[i].title;
@@ -75,8 +75,8 @@ exports.init = function () {
 						// Concatenate everything
 						var newsHeadlines = [];
 						var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
-							maxNews = (maxNews > 8 ? 8 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 8 articles (~source limit)
 							newsHeadlines.push('Je recente nieuws berichten.');
+							maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
 
 						for(var i = 0; i < maxNews; i++) {
 							var title = data.responseData.feed.entries[i].title;
