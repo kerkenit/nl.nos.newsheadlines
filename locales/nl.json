@@ -16,5 +16,30 @@
 			trueLow: 'Je hebt te weinig nieuwsartikelen geselecteerd. Het minimum is 1 artikel.',
 			noInt: 'Je hebt geen enkele nummer opgegeven. U moet een nummer op te geven tussen 1 en 20.'
 		}
+	},
+	app: {
+		speechPrefix: 'Je recente nieuws berichten.'
+		numbers: {
+			one: 'Een',
+			two: 'Twee',
+			three: 'Drie',
+			four: 'Vier',
+			five: 'Vijf',
+			six: 'Zes',
+			seven: 'Zeven',
+			eight: 'Acht',
+			nine: 'Negen',
+			ten: 'Tien',
+			eleven: 'Elf',
+			twelve: 'Twaalf',
+			thirteen: 'Dertien',
+			fourteen: 'Veertien',
+			fiveteen: 'Vijftien',
+			sixteen: 'Zestien',
+			seventeen: 'Zeventien',
+			eightteen: 'Actien',
+			nineteen: 'Negentien',
+			twenty: 'Twintig'
+		}
 	}
 }

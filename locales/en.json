@@ -16,5 +16,30 @@
 			trueLow: 'You selected too few news articles. The minimum is 1 article.',
 			noInt: 'You did not provide an number. You need to provide an number between 1 and 20.'
 		}
+	},
+	app: {
+		speechPrefix: 'Your recent news headlines.'
+		numbers: {
+			one: 'One',
+			two: 'Twoo',
+			three: 'Three',
+			four: 'Four',
+			five: 'Five',
+			six: 'Six',
+			seven: 'Seven',
+			eight: 'Eight',
+			nine: 'Nine',
+			ten: 'Ten',
+			eleven: 'Eleven',
+			twelve: 'Twelve',
+			thirteen: 'Thirteen',
+			fourteen: 'Fourteen',
+			fiveteen: 'Fiveteen',
+			sixteen: 'Sixteen',
+			seventeen: 'Seventeen',
+			eightteen: 'Eightteen',
+			nineteen: 'Nineteen',
+			twenty: 'Twenty'
+		}
 	}
 }
