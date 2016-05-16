@@ -29,7 +29,7 @@ exports.init = function() {
 						content = content.slice(0, -1);
 					}
 					if (title.length > 0 && content.length > 0) {
-						newsHeadlines.push(headlineKeywords[i] + '. ' + title + '. ' + content + '........ ');
+						newsHeadlines.push(headlineKeywords[i] + '. ' + title + '........ ');
 					}
 					title = null;
 					content = null;
@@ -75,7 +75,7 @@ exports.init = function() {
 								content = content.slice(0, -1);
 							}
 							if (title.length > 0 && content.length > 0) {
-								newsHeadlines.push(headlineKeywords[i] + '. ' + title + '. ' + content + '........ ');
+								newsHeadlines.push(headlineKeywords[i] + '. ' + title + '........ ');
 							}
 							title = null;
 							content = null;
