@@ -40,6 +40,44 @@
 			"eightteen": "Eightteen",
 			"nineteen": "Nineteen",
 			"twenty": "Twenty"
+		},
+		"findandreplace": {
+			"kmph": {
+				"find": "km/h",
+				"replace": "kilometer per hour"
+			},
+			"mph": {
+				"find": "mph",
+				"replace": "miles per hour"
+			},
+			"co2": {
+				"find": "CO2",
+				"replace": "C O 2"
+			},
+			"rivm": {
+				"find": "RIVM",
+				"replace": "R I V M"
+			},
+			"om": {
+				"find": "OM",
+				"replace": "O M"
+			},
+			"rdw": {
+				"find": "RDW",
+				"replace": "R D W"
+			},
+			"who": {
+				"find": "WHO",
+				"replace": "W H O"
+			},
+			"bbc": {
+				"find": "BBC",
+				"replace": "B B C"
+			},
+			"youp": {
+				"find": "Youp",
+				"replace": "Youp"
+			}
 		}
 	}
 }

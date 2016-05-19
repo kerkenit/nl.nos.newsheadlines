@@ -20,7 +20,7 @@
 	"app": {
 		"speechPrefix": "Je recente nieuws berichten.",
 		"numbers": {
-			"one": "Een",
+			"one": "Één",
 			"two": "Twee",
 			"three": "Drie",
 			"four": "Vier",
@@ -40,6 +40,44 @@
 			"eightteen": "Actien",
 			"nineteen": "Negentien",
 			"twenty": "Twintig"
+		},
+		"findandreplace": {
+			"kmph": {
+				"find": "km/u",
+				"replace": "kilometer per uur"
+			},
+			"mph": {
+				"find": "mph",
+				"replace": "mijlen per uur"
+			},
+			"co2": {
+				"find": "CO2",
+				"replace": "C O 2"
+			},
+			"rivm": {
+				"find": "RIVM",
+				"replace": "R I V M"
+			},
+			"om": {
+				"find": "OM",
+				"replace": "O M"
+			},
+			"rdw": {
+				"find": "RDW",
+				"replace": "R D W"
+			},
+			"who": {
+				"find": "WHO",
+				"replace": "W H O"
+			},
+			"bbc": {
+				"find": "BBC",
+				"replace": "Bie Bie Sie"
+			},
+			"youp": {
+				"find": "Youp",
+				"replace": "Joep"
+			}
 		}
 	}
 }

@@ -4,7 +4,7 @@
 		"nl": "NOS Headlines",
 		"en": "NOS Headlines"
 	},
-	"version": "0.1.6",
+	"version": "0.2.0",
 	"compatibility": "0.x || 1.x",
 	"author": {
 		"name": "Marco van 't Klooster",
@@ -28,7 +28,11 @@
 		}, {
 			"name": "Christian Versloot",
 			"email": "mail@christianversloot.nl",
-			"website": "https://github.com/chrisv95/nl.webchitect.newsheadlines"
+			"website": "https://github.com/chrisv95"
+		}, {
+			"name": "Bas van den Bosch",
+			"email": "bvdbos@gmail.com",
+			"website": "https://github.com/bvdbos"
 		}]
 	},
 	"images": {
