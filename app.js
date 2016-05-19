@@ -12,10 +12,12 @@ exports.init = function() {
 		// Download news headlines in JSON format,
 		// and formulate the news headlines
 		Homey.log('News headlines are being downloaded');
+		var striptags = require('striptags');
 		require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.nos.nl/nosjournaal').then(function(data) {
 			if (data !== undefined && data != null && data.responseData !== undefined && data.responseData !== null && data.responseData.feed !== undefined && data.responseData.feed !== null && data.responseData.feed.entries !== undefined && data.responseData.feed.entries !== null && data.responseData.feed.entries.length > 0) {
 				// Concatenate everything
 				var newsHeadlines = [];
+				var Headlines = [];
 				var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
 				maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
 				newsHeadlines.push(__('app.speechPrefix'));
@@ -36,7 +38,10 @@ exports.init = function() {
 				}
 				// Spread the word
 				for (var i = 0; i < newsHeadlines.length; i++) {
-					Homey.manager('speech-output').say(__(newsHeadlines[i]));
+					Homey.log(newsHeadlines[i] + "    ");
+					Headlines[i]=striptags(newsHeadlines[i]);
+					//Homey.log(Headlines[i] + "    ");
+					Homey.manager('speech-output').say(__(Headlines[i].substr(0,255)));
 				}
 				callback(null, true);
 			} else {
@@ -58,6 +63,7 @@ exports.init = function() {
 				// Download news headlines in JSON format,
 				// and formulate the news headlines
 				Homey.log('News headlines are being downloaded');
+				var striptags = require('striptags');
 				require('http.min').json('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://feeds.nos.nl/nosjournaal').then(function(data) {
 					if (data !== undefined && data != null && data.responseData !== undefined && data.responseData !== null && data.responseData.feed !== undefined && data.responseData.feed !== null && data.responseData.feed.entries !== undefined && data.responseData.feed.entries !== null && data.responseData.feed.entries.length > 0) {
 						// Concatenate everything
@@ -82,7 +88,10 @@ exports.init = function() {
 						}
 						// Spread the word
 						for (var i = 0; i < newsHeadlines.length; i++) {
-							Homey.manager('speech-output').say(__(newsHeadlines[i]));
+					Homey.log(newsHeadlines[i] + "    ");
+					Headlines[i]=striptags(newsHeadlines[i]);
+					//Homey.log(Headlines[i] + "    ");
+					Homey.manager('speech-output').say(__(Headlines[i].substr(0,255)));
 						}
 					}
 				});
