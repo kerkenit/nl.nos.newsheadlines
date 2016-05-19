@@ -61,7 +61,7 @@
 					newsBlock.disabled = false;
 				}, 3500);
 			} else if (update === "trueHigh") {
-				Homey.alert(__('settings.error.'), 'error');
+				Homey.alert(__('settings.error.trueHigh'), 'error');
 				error.innerHTML = __('settings.error.error') + ': ' + __('settings.error.trueHigh');
 			} else if (update === "trueLow") {
 				Homey.alert(__('settings.error.trueLow'), 'error');
