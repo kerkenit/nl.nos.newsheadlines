@@ -77,6 +77,18 @@
 			"youp": {
 				"find": "Youp",
 				"replace": "Youp"
+			},
+			"nos": {
+				"find": "NOS",
+				"replace": "En O Es"
+			},
+			"taser": {
+				"find": "'taser'",
+				"replace": "'taser'"
+			},
+			"is": {
+				"find": " IS ",
+				"replace": " IS "
 			}
 		}
 	}
