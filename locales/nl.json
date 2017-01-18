@@ -20,7 +20,7 @@
 	"app": {
 		"speechPrefix": "Je recente nieuws berichten.",
 		"numbers": {
-			"one": "Één",
+			"one": "1",
 			"two": "Twee",
 			"three": "Drie",
 			"four": "Vier",
@@ -70,6 +70,10 @@
 				"find": "WHO",
 				"replace": "W H O"
 			},
+			"wmo": {
+				"find": "WMO",
+				"replace": "W M O"
+			},
 			"bbc": {
 				"find": "BBC",
 				"replace": "Bie Bie Sie"
@@ -89,6 +93,14 @@
 			"is": {
 				"find": " IS ",
 				"replace": " IE ES "
+			},
+			"nasa": {
+				"find": "NASA",
+				"replace": "Na Sa"
+			},
+			"elnino": {
+				"find": "El Niño",
+				"replace": "El Nien jo"
 			}
 		}
 	}

@@ -30,11 +30,15 @@ exports.init = function() {
 				text = text.replace(__('app.findandreplace.om.find'), __('app.findandreplace.om.replace'));
 				text = text.replace(__('app.findandreplace.rdw.find'), __('app.findandreplace.rdw.replace'));
 				text = text.replace(__('app.findandreplace.who.find'), __('app.findandreplace.who.replace'));
+				text = text.replace(__('app.findandreplace.wmo.find'), __('app.findandreplace.wmo.replace'));
 				text = text.replace(__('app.findandreplace.bbc.find'), __('app.findandreplace.bbc.replace'));
 				text = text.replace(__('app.findandreplace.youp.find'), __('app.findandreplace.youp.replace'));
 				text = text.replace(__('app.findandreplace.nos.find'), __('app.findandreplace.nos.replace'));
 				text = text.replace(__('app.findandreplace.taser.find'), __('app.findandreplace.taser.replace'));
 				text = text.replace(__('app.findandreplace.is.find'), __('app.findandreplace.is.replace'));
+				text = text.replace(__('app.findandreplace.nasa.find'), __('app.findandreplace.nasa.replace'));
+				text = text.replace(__('app.findandreplace.elnino.find'), __('app.findandreplace.elnino.replace'));
+
 				return text;
 			} else {
 				return '';
@@ -43,7 +47,7 @@ exports.init = function() {
 	var createSpeechText = function(textRaw) {
 			var text = [];
 			//cut at last space every 255 chars
-			var senetenceParts = striptags(textRaw).split(/[,.!\?\-:;]+/g);
+			var senetenceParts = striptags(textRaw).split(/[,.!\?\-:;]+$/g);
 			for (var i = 0; i < senetenceParts.length; i++) {
 				if (senetenceParts[i].length >= 255) {
 					var textHelper = senetenceParts[i].substr(0, 255);
