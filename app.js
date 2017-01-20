@@ -6,12 +6,19 @@ exports.init = function() {
 	var striptags = require('striptags');
 	var numberOfNewsArticles = Homey.manager('settings').get('numberOfNewsArticles');
 	if (numberOfNewsArticles === undefined || numberOfNewsArticles === null) {
-		// Set the standard number of news headlines to 20
 		Homey.manager('settings').set('numberOfNewsArticles', 5);
+	}
+	var newslength = Homey.manager('settings').get('newslength');
+	if (newslength === undefined || newslength === null) {
+		Homey.manager('settings').set('newslength', 100);
 	}
 	var headlineKeywords = [__('app.numbers.one'), __('app.numbers.two'), __('app.numbers.three'), __('app.numbers.four'), __('app.numbers.five'), __('app.numbers.six'), __('app.numbers.seven'), __('app.numbers.eight'), __('app.numbers.nine'), __('app.numbers.ten'), __('app.numbers.eleven'), __('app.numbers.twelve'), __('app.numbers.thirteen'), __('app.numbers.fourteen'), __('app.numbers.fiveteen'), __('app.numbers.sixteen'), __('app.numbers.seventeen'), __('app.numbers.eightteen'), __('app.numbers.nineteen'), __('app.numbers.twenty')];
 	String.prototype.beautify = function() {
-		return this.replace('  ', '').replace('"', '').replace("'", "").replace("\"", "").trim();
+		return this.replace('  ', '').replace('"', '').replace("'", "").replace("\"", "").replace("-", " ").trim();
+	};
+
+	String.prototype.endsWith = function(suffix) {
+	    return this.indexOf(suffix, this.length - suffix.length) !== -1;
 	};
 	var formatHeadline = function(text) {
 			text = text.replace('"', '');
@@ -47,7 +54,7 @@ exports.init = function() {
 	var createSpeechText = function(textRaw) {
 			var text = [];
 			//cut at last space every 255 chars
-			var senetenceParts = striptags(textRaw).split(/[,.!\?\-:;]+$/g);
+			var senetenceParts = textRaw.split(/[,.!\?\:;]+/g);
 			for (var i = 0; i < senetenceParts.length; i++) {
 				if (senetenceParts[i].length >= 255) {
 					var textHelper = senetenceParts[i].substr(0, 255);
@@ -60,33 +67,44 @@ exports.init = function() {
 			}
 			return text.filter(Boolean);
 		};
-	// Homey checks if it should read the news
-	Homey.manager('flow').on('action.readNews', function(callback) {
-		// Read the news
-		// Download news headlines in JSON format,
-		// and formulate the news headlines
+
+	Homey.manager('flow').on('action.readNews', function(callback, args) {
 		Homey.log('News headlines are being downloaded');
 		var FeedMe = require('feedme');
 		var http = require('http');
-		// Concatenate everything
+
 		var newsHeadlines = [];
 		var Headlines = [];
-		var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
+		var maxNews = args.itemcount;
 		maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
 		newsHeadlines.push(__('app.speechPrefix'));
 		var i = 0;
-		http.get('http://feeds.nos.nl/nosjournaal', function(res) {
+		http.get(Homey.env.feed, function(res) {
 			var parser = new FeedMe();
 			parser.on('item', function(item) {
 				if (i < maxNews) {
 					Homey.log(item.title);
-					var title = replaceContent(item.title);
-					var content = replaceContent(item.description);
+					var title = replaceContent(item.title.beautify());
+					var content = striptags(replaceContent(item.description));
 					if (title.length > 0 && content.length > 0) {
 						newsHeadlines.push(formatHeadline(headlineKeywords[i] + '. ' + title + '. '));
-						var description = createSpeechText(content);
-						for (var j = 0; j < description.length; j++) {
-							newsHeadlines.push(description[j]);
+						if(args.newslength === 'full') {
+							var description = createSpeechText(content);
+							for (var j = 0; j < description.length; j++) {
+								newsHeadlines.push(description[j]);
+							}
+						}
+						else if(args.newslength !== 'headline') {
+							var words = content.split(' ', Number(args.newslength));
+							var descriptions = words.join(' ');
+							if(!descriptions.endsWith('.')) {
+								descriptions = descriptions.substr(0, descriptions.lastIndexOf(".")+1);
+							}
+							descriptions = createSpeechText(descriptions.substr(0, descriptions.length));
+
+							for (var k = 0; k < descriptions.length; k++) {
+								newsHeadlines.push(descriptions[k]);
+							}
 						}
 					}
 				}
@@ -101,6 +119,7 @@ exports.init = function() {
 		});
 		callback(null, true);
 	});
+
 	// Homey checks for the news headlines to be triggered
 	// i.e. through phrases like
 	// What are the news headlines?
@@ -120,21 +139,36 @@ exports.init = function() {
 				// Concatenate everything
 				var newsHeadlines = [];
 				var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
+				var newslength = Homey.manager('settings').get('newslength');
+
 				maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
 				newsHeadlines.push(__('app.speechPrefix'));
 				var i = 0;
-				http.get('http://feeds.nos.nl/nosjournaal', function(res) {
+				http.get(Homey.env.feed, function(res) {
 					var parser = new FeedMe();
 					parser.on('item', function(item) {
 						if (i < maxNews) {
 							Homey.log(item.title);
-							var title = replaceContent(item.title);
-							var content = replaceContent(item.description);
+							var title = replaceContent(item.title.beautify());
+							var content = striptags(replaceContent(item.description));
 							if (title.length > 0 && content.length > 0) {
 								newsHeadlines.push(formatHeadline(headlineKeywords[i] + '. ' + title + '. '));
-								var description = createSpeechText(content);
-								for (var j = 0; j < description.length; j++) {
-									newsHeadlines.push(description[j]);
+								if(newslength === undefined || newslength === null) {
+									var description = createSpeechText(content);
+									for (var j = 0; j < description.length; j++) {
+										newsHeadlines.push(description[j]);
+									}
+								} else {
+									var words = content.split(' ', newslength);
+									var descriptions = words.join(' ');
+									if(!descriptions.endsWith('.')) {
+										descriptions = descriptions.substr(0, descriptions.lastIndexOf(".")+1);
+									}
+									descriptions = createSpeechText(descriptions.substr(0, descriptions.length));
+
+									for (var k = 0; k < descriptions.length; k++) {
+										newsHeadlines.push(descriptions[k]);
+									}
 								}
 							}
 						}

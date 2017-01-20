@@ -6,7 +6,8 @@
 		},
 		"controls": {
 			"legend": "Instellingen",
-			"label": "Aantal nieuws berichten (max 20)",
+			"numberOfNewsArticles": "Aantal nieuws berichten (max 20)",
+			"newslength": "Aantal woorden per bericht",
 			"save": "Opslaan"
 		},
 		"success": "Wijzigingen opgeslagen",

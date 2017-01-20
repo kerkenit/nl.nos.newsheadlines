@@ -6,7 +6,8 @@
 		},
 		"controls": {
 			"legend": "Settings",
-			"label": "Number of news items (max 20)",
+			"numberOfNewsArticles": "Number of news items (max 20)",
+			"newslength": "Number of spoken words",
 			"save": "Save"
 		},
 		"success": "Changes saved",

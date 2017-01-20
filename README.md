@@ -16,3 +16,7 @@ OK, Homey...
 # Opmerkingen:
 * Homey kan alleen het nieuws met een Nederlandse stem uitspreken.
 * Niet Nederlandse woorden kan Homey ook niet goed uitspreken.
+
+## Vind je dit leuk?
+Wil je dat ik door ga met het ontwikkelen?
+[![PayPal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/blue-pill-paypal-34px.png)](http://PayPal.Me/KerkEnIT)
