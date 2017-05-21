@@ -8,7 +8,9 @@
 			"legend": "Settings",
 			"numberOfNewsArticles": "Number of news items (max 20)",
 			"newslength": "Number of spoken words",
-			"save": "Save"
+			"defaultFeed": "Default news source",
+			"save": "Save",
+			"ownfeed": "Own RSS feed"
 		},
 		"success": "Changes saved",
 		"error": {
@@ -16,6 +18,11 @@
 			"trueHigh": "You selected too many news articles. The maximum is 20 articles.",
 			"trueLow": "You selected too few news articles. The minimum is 1 article.",
 			"noInt": "You did not provide an number. You need to provide an number between 1 and 20."
+		},
+		"feed": {
+			"prompt": "Enter the URL of your RSS feed:",
+			"confirm": "Are you sure, you want to set this news source as default when you ask Homey for news?",
+			"alert": "Invalid URL. HTTPS is unsupported!"
 		}
 	},
 	"app": {

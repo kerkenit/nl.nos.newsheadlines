@@ -4,7 +4,7 @@
 		"nl": "NOS Headlines",
 		"en": "NOS Headlines"
 	},
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"compatibility": "1.x",
 	"author": {
 		"name": "Marco van 't Klooster",
@@ -13,10 +13,10 @@
 	},
 	"flow": {
 		"actions": [{
-			"id": "readNews",
+			"id": "headline",
 			"title": {
-				"en": "Read the news",
-				"nl": "Lees het nieuws"
+				"en": "Headline only",
+				"nl": "Allees nieuws kop"
 			},
 			"args": [{
 				"name": "itemcount",
@@ -24,7 +24,97 @@
 				"min": 1,
 				"max": 20,
 				"step": 1,
-				"label": "Berichten",
+				"label": " berichten",
+				"labelDecimals": 0
+			}, {
+				"name": "feed",
+				"type": "autocomplete"
+			}]
+		}, {
+			"id": "50",
+			"title": {
+				"en": "Around 50 words",
+				"nl": "Ongeveer 50 woorden"
+			},
+			"args": [{
+				"name": "itemcount",
+				"type": "range",
+				"min": 1,
+				"max": 20,
+				"step": 1,
+				"label": " berichten",
+				"labelDecimals": 0
+			}, {
+				"name": "feed",
+				"type": "autocomplete"
+			}]
+		}, {
+			"id": "100",
+			"title": {
+				"en": "Around 100 words",
+				"nl": "Ongeveer 100 woorden"
+			},
+			"args": [{
+				"name": "itemcount",
+				"type": "range",
+				"min": 1,
+				"max": 20,
+				"step": 1,
+				"label": " berichten",
+				"labelDecimals": 0
+			}, {
+				"name": "feed",
+				"type": "autocomplete"
+			}]
+		}, {
+			"id": "250",
+			"title": {
+				"en": "Around 250 words",
+				"nl": "Ongeveer 250 woorden"
+			},
+			"args": [{
+				"name": "itemcount",
+				"type": "range",
+				"min": 1,
+				"max": 20,
+				"step": 1,
+				"label": " berichten",
+				"labelDecimals": 0
+			}, {
+				"name": "feed",
+				"type": "autocomplete"
+			}]
+		}, {
+			"id": "full",
+			"title": {
+				"en": "Full news items",
+				"nl": "Volledig nieuwsbericht"
+			},
+			"args": [{
+				"name": "itemcount",
+				"type": "range",
+				"min": 1,
+				"max": 20,
+				"step": 1,
+				"label": " berichten",
+				"labelDecimals": 0
+			}, {
+				"name": "feed",
+				"type": "autocomplete"
+			}]
+		}, {
+			"id": "readNews",
+			"title": {
+				"en": "Obsolete",
+				"nl": "Ouderwets (Niet gebruiken)"
+			},
+			"args": [{
+				"name": "itemcount",
+				"type": "range",
+				"min": 1,
+				"max": 20,
+				"step": 1,
+				"label": " berichten",
 				"labelDecimals": 0
 			}, {
 				"name": "newslength",

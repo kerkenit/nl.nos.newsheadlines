@@ -29,28 +29,24 @@ exports.init = function() {
 			var index = text.lastIndexOf('.');
 			return [text.slice(0, index), text.slice(index + 1)][0] + '.';
 		};
-	var replaceContent = function(text) {
-			if (text !== undefined) {
-				text = text.replace(__('app.findandreplace.kmph.find'), __('app.findandreplace.kmph.replace'));
-				text = text.replace(__('app.findandreplace.mph.find'), __('app.findandreplace.mph.replace'));
-				text = text.replace(__('app.findandreplace.co2.find'), __('app.findandreplace.co2.replace'));
-				text = text.replace(__('app.findandreplace.rivm.find'), __('app.findandreplace.rivm.replace'));
-				text = text.replace(__('app.findandreplace.om.find'), __('app.findandreplace.om.replace'));
-				text = text.replace(__('app.findandreplace.rdw.find'), __('app.findandreplace.rdw.replace'));
-				text = text.replace(__('app.findandreplace.who.find'), __('app.findandreplace.who.replace'));
-				text = text.replace(__('app.findandreplace.wmo.find'), __('app.findandreplace.wmo.replace'));
-				text = text.replace(__('app.findandreplace.bbc.find'), __('app.findandreplace.bbc.replace'));
-				text = text.replace(__('app.findandreplace.youp.find'), __('app.findandreplace.youp.replace'));
-				text = text.replace(__('app.findandreplace.nos.find'), __('app.findandreplace.nos.replace'));
-				text = text.replace(__('app.findandreplace.taser.find'), __('app.findandreplace.taser.replace'));
-				text = text.replace(__('app.findandreplace.is.find'), __('app.findandreplace.is.replace'));
-				text = text.replace(__('app.findandreplace.nasa.find'), __('app.findandreplace.nasa.replace'));
-				text = text.replace(__('app.findandreplace.elnino.find'), __('app.findandreplace.elnino.replace'));
-				return text;
-			} else {
-				return '';
-			}
-		};
+	String.prototype.replaceContent = function() {
+		this.replace(__('app.findandreplace.kmph.find'), __('app.findandreplace.kmph.replace'));
+		this.replace(__('app.findandreplace.mph.find'), __('app.findandreplace.mph.replace'));
+		this.replace(__('app.findandreplace.co2.find'), __('app.findandreplace.co2.replace'));
+		this.replace(__('app.findandreplace.rivm.find'), __('app.findandreplace.rivm.replace'));
+		this.replace(__('app.findandreplace.om.find'), __('app.findandreplace.om.replace'));
+		this.replace(__('app.findandreplace.rdw.find'), __('app.findandreplace.rdw.replace'));
+		this.replace(__('app.findandreplace.who.find'), __('app.findandreplace.who.replace'));
+		this.replace(__('app.findandreplace.wmo.find'), __('app.findandreplace.wmo.replace'));
+		this.replace(__('app.findandreplace.bbc.find'), __('app.findandreplace.bbc.replace'));
+		this.replace(__('app.findandreplace.youp.find'), __('app.findandreplace.youp.replace'));
+		this.replace(__('app.findandreplace.nos.find'), __('app.findandreplace.nos.replace'));
+		this.replace(__('app.findandreplace.taser.find'), __('app.findandreplace.taser.replace'));
+		this.replace(__('app.findandreplace.is.find'), __('app.findandreplace.is.replace'));
+		this.replace(__('app.findandreplace.nasa.find'), __('app.findandreplace.nasa.replace'));
+		this.replace(__('app.findandreplace.elnino.find'), __('app.findandreplace.elnino.replace'));
+		return this;
+	};
 	var createSpeechText = function(textRaw) {
 			var text = [];
 			//cut at last space every 255 chars
@@ -67,53 +63,155 @@ exports.init = function() {
 			}
 			return text.filter(Boolean);
 		};
-	Homey.manager('flow').on('action.readNews', function(callback, args) {
-		Homey.log('News headlines are being downloaded');
-		var FeedMe = require('feedme');
-		var http = require('http');
-		var newsHeadlines = [];
-		var Headlines = [];
-		var maxNews = args.itemcount;
-		maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
-		newsHeadlines.push(__('app.speechPrefix'));
-		var i = 0;
-		http.get(Homey.env.FEED, function(res) {
-			var parser = new FeedMe();
-			parser.on('item', function(item) {
-				if (i < maxNews) {
-					Homey.log(item.title);
-					var title = replaceContent(entities.decode(item.title.beautify()));
-					var content = striptags(replaceContent(entities.decode(item.description)));
-					if (title.length > 0 && content.length > 0) {
-						newsHeadlines.push(formatHeadline(headlineKeywords[i] + '. ' + title + '. '));
-						if (args.newslength === 'full') {
-							var description = createSpeechText(content);
-							for (var j = 0; j < description.length; j++) {
-								newsHeadlines.push(description[j]);
-							}
-						} else if (args.newslength !== 'headline') {
-							var words = content.split(' ', Number(args.newslength));
-							var descriptions = words.join(' ');
-							if (!descriptions.endsWith('.')) {
-								descriptions = descriptions.substr(0, descriptions.lastIndexOf(".") + 1);
-							}
-							descriptions = createSpeechText(descriptions.substr(0, descriptions.length));
-							for (var k = 0; k < descriptions.length; k++) {
-								newsHeadlines.push(descriptions[k]);
+	var autocomplete = function(callback, args) {
+			var myItems = [{
+				rss: 'http://feeds.nos.nl/nosnieuwsalgemeen',
+				name: 'NOS Nieuws Algemeen'
+			}, {
+				rss: 'http://feeds.nos.nl/nosnieuwsbinnenland',
+				name: ' NOS Nieuws Binnenland '
+			}, {
+				rss: 'http://feeds.nos.nl/nosnieuwsbuitenland',
+				name: 'NOS Nieuws Buitenland'
+			}, {
+				rss: 'http://feeds.nos.nl/nosnieuwspolitiek',
+				name: 'NOS Nieuws Politiek'
+			}, {
+				rss: 'http://feeds.nos.nl/nosnieuwseconomie',
+				name: 'NOS Nieuws Economie'
+			}, {
+				rss: 'http://feeds.nos.nl/nosnieuwsopmerkelijk',
+				name: 'NOS Nieuws Opmerkelijk'
+			}, {
+				rss: 'http://feeds.nos.nl/nosnieuwskoningshuis',
+				name: 'NOS Nieuws Koningshuis'
+			}, {
+				rss: 'http://feeds.nos.nl/nosnieuwscultuurenmedia',
+				name: 'NOS Nieuws Cultuur en media'
+			}, {
+				rss: 'http://feeds.nos.nl/nosnieuwstech',
+				name: 'NOS Nieuws Tech'
+			}, {
+				rss: 'http://feeds.nos.nl/nossportalgemeen',
+				name: 'NOS Sport Algemeen'
+			}, {
+				rss: 'http://feeds.nos.nl/nosvoetbal',
+				name: 'NOS Sport Voetbal'
+			}, {
+				rss: 'http://feeds.nos.nl/nossportwielrennen',
+				name: 'NOS Sport Wielrennen'
+			}, {
+				rss: 'http://feeds.nos.nl/nossportschaatsen',
+				name: 'NOS Sport Schaatsen'
+			}, {
+				rss: 'http://feeds.nos.nl/nossporttennis',
+				name: 'NOS Sport Tennis'
+			}, {
+				rss: 'http://feeds.nos.nl/nieuwsuuralgemeen',
+				name: 'Nieuwsuur'
+			}, {
+				rss: 'http://feeds.nos.nl/nosop3',
+				name: 'NOS op 3'
+			}, {
+				rss: 'http://feeds.nos.nl/jeugdjournaal',
+				name: 'NOS Jeugdjournaal'
+			}];
+			// filter items to match the search query
+			myItems = myItems.filter(function(item) {
+				return (item.name.toLowerCase().indexOf(args.query.toLowerCase()) > -1);
+			});
+			callback(null, myItems); // err, results
+		};
+	var readNews = function(maxNews, newslength, feed, callback) {
+			Homey.log('News headlines are being downloaded');
+			var FeedMe = require('feedme');
+			var http = require('http');
+			var newsHeadlines = [];
+			var Headlines = [];
+			maxNews = (maxNews > 20 ? 20 : (maxNews <= 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
+			newsHeadlines.push(__('app.speechPrefix').replaceContent());
+			var i = 0;
+			http.get(feed.rss, function(res) {
+				var parser = new FeedMe();
+				parser.on('item', function(item) {
+					if (i < maxNews) {
+						Homey.log(item.title);
+						var title = entities.decode(item.title.beautify()).replaceContent();
+						var content = striptags(entities.decode(item.description).replaceContent());
+						if (title.length > 0 && content.length > 0) {
+							newsHeadlines.push(formatHeadline(headlineKeywords[i] + '. ' + title + '. '));
+							if (newslength === 'full') {
+								var description = createSpeechText(content);
+								for (var j = 0; j < description.length; j++) {
+									newsHeadlines.push(description[j]);
+								}
+							} else if (newslength !== 'headline') {
+								var words = content.split(' ', Number(newslength));
+								var descriptions = words.join(' ');
+								if (!descriptions.endsWith('.')) {
+									descriptions = descriptions.substr(0, descriptions.lastIndexOf(".") + 1);
+								}
+								descriptions = createSpeechText(descriptions.substr(0, descriptions.length));
+								for (var k = 0; k < descriptions.length; k++) {
+									newsHeadlines.push(descriptions[k]);
+								}
 							}
 						}
 					}
-				}
-				i++;
+					i++;
+				});
+				parser.on('end', function() {
+					for (var j = 0; j < newsHeadlines.length; j++) {
+						Homey.manager('speech-output').say(__(newsHeadlines[j]));
+					}
+					callback(null, true);
+				});
+				res.pipe(parser);
 			});
-			parser.on('end', function() {
-				for (var j = 0; j < newsHeadlines.length; j++) {
-					Homey.manager('speech-output').say(__(newsHeadlines[j]));
-				}
-			});
-			res.pipe(parser);
+		};
+	Homey.manager('flow').on('action.readNews', function(callback, args) {
+		readNews(args.itemcount, args.newslength, {
+			rss: 'http://feeds.nos.nl/nosnieuwsalgemeen',
+			name: 'NOS Nieuws Algemeen'
+		}, function(obsolete, status) {
+			callback('Obsolete: This card will be removed in a further release', false);
 		});
-		callback(null, true);
+	});
+	Homey.manager('flow').on('action.headline.feed.autocomplete', function(callback, args) {
+		autocomplete(callback, args);
+	});
+	Homey.manager('flow').on('action.headline', function(callback, args) {
+		readNews(args.itemcount, 'headline', args.feed, callback);
+	});
+	Homey.manager('flow').on('action.50.feed.autocomplete', function(callback, args) {
+		autocomplete(callback, args);
+	});
+	Homey.manager('flow').on('action.50', function(callback, args) {
+		readNews(args.itemcount, '50', args.feed, callback);
+	});
+	Homey.manager('flow').on('action.50.feed.autocomplete', function(callback, args) {
+		autocomplete(callback, args);
+	});
+	Homey.manager('flow').on('action.50', function(callback, args) {
+		readNews(args.itemcount, '50', args.feed, callback);
+	});
+	Homey.manager('flow').on('action.100.feed.autocomplete', function(callback, args) {
+		autocomplete(callback, args);
+	});
+	Homey.manager('flow').on('action.100', function(callback, args) {
+		readNews(args.itemcount, '100', args.feed, callback);
+	});
+	Homey.manager('flow').on('action.250.feed.autocomplete', function(callback, args) {
+		autocomplete(callback, args);
+	});
+	Homey.manager('flow').on('action.250', function(callback, args) {
+		readNews(args.itemcount, '250', args.feed, callback);
+	});
+	Homey.manager('flow').on('action.full.feed.autocomplete', function(callback, args) {
+		autocomplete(callback, args);
+	});
+	Homey.manager('flow').on('action.full', function(callback, args) {
+		readNews(args.itemcount, 'full', args.feed, callback);
 	});
 	// Homey checks for the news headlines to be triggered
 	// i.e. through phrases like
@@ -125,55 +223,15 @@ exports.init = function() {
 		speech.triggers.forEach(function(trigger) {
 			// Check if the newsheadline trigger is triggered
 			if (trigger.id === 'newsheadline') {
-				// Read the news
-				// Download news headlines in JSON format,
-				// and formulate the news headlines
-				Homey.log('News headlines are being downloaded');
-				var FeedMe = require('feedme');
-				var http = require('http');
-				// Concatenate everything
-				var newsHeadlines = [];
-				var maxNews = Homey.manager('settings').get('numberOfNewsArticles');
+				var maxNews = Homey.manager('settings').get('numberOfNewsArticles')
 				var newslength = Homey.manager('settings').get('newslength');
-				maxNews = (maxNews > 20 ? 20 : (maxNews < 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
-				newsHeadlines.push(__('app.speechPrefix'));
-				var i = 0;
-				http.get(Homey.env.FEED, function(res) {
-					var parser = new FeedMe();
-					parser.on('item', function(item) {
-						if (i < maxNews) {
-							Homey.log(item.title);
-							var title = replaceContent(entities.decode(item.title.beautify()));
-							var content = striptags(entities.decode(replaceContent(item.description)));
-							if (title.length > 0 && content.length > 0) {
-								newsHeadlines.push(formatHeadline(headlineKeywords[i] + '. ' + title + '. '));
-								if (newslength === undefined || newslength === null) {
-									var description = createSpeechText(content);
-									for (var j = 0; j < description.length; j++) {
-										newsHeadlines.push(description[j]);
-									}
-								} else {
-									var words = content.split(' ', newslength);
-									var descriptions = words.join(' ');
-									if (!descriptions.endsWith('.')) {
-										descriptions = descriptions.substr(0, descriptions.lastIndexOf(".") + 1);
-									}
-									descriptions = createSpeechText(descriptions.substr(0, descriptions.length));
-									for (var k = 0; k < descriptions.length; k++) {
-										newsHeadlines.push(descriptions[k]);
-									}
-								}
-							}
-						}
-						i++;
-					});
-					parser.on('end', function() {
-						for (var j = 0; j < newsHeadlines.length; j++) {
-							Homey.manager('speech-output').say(__(newsHeadlines[j]));
-						}
-					});
-					res.pipe(parser);
-				});
+				var feed = Homey.manager('settings').get('feed');
+				if (feed === undefined || feed === null || feed.length === 0) {
+					feed = 'http://feeds.nos.nl/nosnieuwsalgemeen';
+				}
+				readNews(maxNews, newslength, {
+					rss: feed
+				}, callback);
 			}
 		});
 	});

@@ -16,6 +16,29 @@
 				<label for="newslength" data-i18n="settings.controls.newslength" style="width:16em;"></label>
 				<input id="newslength" name="newslength" type="number" value="" min="0" max="2500" step="10" style="width:3em;" />
 			</div>
+			<div class="field row">
+				<label for="defaultFeed" data-i18n="settings.controls.defaultFeed" style="width:16em;"></label>
+				<select id="defaultFeed" name="defaultFeed" style="width:16em;" onchange="own(this)">
+					<option value="http://feeds.nos.nl/nosnieuwsalgemeen">NOS Nieuws Algemeen</option>
+					<option value="http://feeds.nos.nl/nosnieuwsbinnenland">NOS Nieuws Binnenland</option>
+					<option value="http://feeds.nos.nl/nosnieuwsbuitenland">NOS Nieuws Buitenland</option>
+					<option value="http://feeds.nos.nl/nosnieuwspolitiek">NOS Nieuws Politiek</option>
+					<option value="http://feeds.nos.nl/nosnieuwseconomie">NOS Nieuws Economie</option>
+					<option value="http://feeds.nos.nl/nosnieuwsopmerkelijk">NOS Nieuws Opmerkelijk</option>
+					<option value="http://feeds.nos.nl/nosnieuwskoningshuis">NOS Nieuws Koningshuis</option>
+					<option value="http://feeds.nos.nl/nosnieuwscultuurenmedia">NOS Nieuws Cultuur en media</option>
+					<option value="http://feeds.nos.nl/nosnieuwstech">NOS Nieuws Tech</option>
+					<option value="http://feeds.nos.nl/nossportalgemeen">NOS Sport Algemeen</option>
+					<option value="http://feeds.nos.nl/nosvoetbal">NOS Sport Voetbal</option>
+					<option value="http://feeds.nos.nl/nossportwielrennen">NOS Sport Wielrennen</option>
+					<option value="http://feeds.nos.nl/nossportschaatsen">NOS Sport Schaatsen</option>
+					<option value="http://feeds.nos.nl/nossporttennis">NOS Sport Tennis</option>
+					<option value="http://feeds.nos.nl/nieuwsuuralgemeen">Nieuwsuur</option>
+					<option value="http://feeds.nos.nl/nosop3">NOS op 3</option>
+					<option value="http://feeds.nos.nl/jeugdjournaal">NOS Jeugdjournaal</option>
+					<option value="own" data-i18n="settings.controls.ownfeed"></option>
+				</select>
+			</div>
 		</fieldset>
 		<button class="right" id="saver" onclick="save()" data-i18n="settings.controls.save"></button>
 		<script type="text/javascript">
@@ -27,7 +50,35 @@
 				document.getElementById('newslength').value = data;
 			});
 
+			Homey.get('feed', function(err, data) {
+				if(data !== undefined && data !== null && data.length > 0) {
+					if(data.indexOf('nos') == -1) {
+						document.getElementById("defaultFeed").value = 'own';
+					} else {
+						document.getElementById("defaultFeed").value = data;
+					}
+				} else{
+					document.getElementById("defaultFeed").selectedIndex = 0;
+				}
+			});
+
 			Homey.ready();
+		}
+
+		function own(control) {
+			if (control.value === "own"){
+				var feed = prompt(__('settings.feed.prompt'), "http://");
+				if (feed != null) {
+					if(feed.substr(0, 7) === 'http://') {
+						if(confirm(__('settings.feed.confirm'))) {
+							Homey.set('feed', feed);
+						}
+					} else {
+						alert(__('settings.feed.confirm'));
+						own(control);
+					}
+				}
+			}
 		}
 
 		function isInteger(x) {
@@ -41,7 +92,8 @@
 				newsBlock = document.getElementById('numberOfNewsArticles'),
 				newslength = document.getElementById('newslength'),
 				error = document.getElementById('error'),
-				success = document.getElementById('success');
+				success = document.getElementById('success'),
+				feed = document.getElementById("defaultFeed").value;
 			// Define update status
 			var update = "true";
 			// Check if news articles exceed limit; change status if the case
@@ -71,6 +123,9 @@
 				// Change the settings in Homey.
 				Homey.set('numberOfNewsArticles', newsBlock.value);
 				Homey.set('newslength', length);
+				if(feed !== 'own') {
+					Homey.set('feed', feed);
+				}
 				// Return to edit mode after 3.5 seconds
 				setTimeout(function() {
 					button.disabled = false;
