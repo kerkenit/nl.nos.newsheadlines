@@ -129,7 +129,7 @@ exports.init = function() {
 			var newsHeadlines = [];
 			var Headlines = [];
 			maxNews = (maxNews > 20 ? 20 : (maxNews <= 1 ? 1 : maxNews)); // Minimum of 1 article, maximum of 20 articles (~source limit)
-			newsHeadlines.push(__('app.speechPrefix').replaceContent());
+			newsHeadlines.push(__('app.speechPrefix'));
 			var i = 0;
 			http.get(feed.rss, function(res) {
 				var parser = new FeedMe();
