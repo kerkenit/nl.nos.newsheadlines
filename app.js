@@ -226,7 +226,7 @@ exports.init = function() {
 				var maxNews = Homey.manager('settings').get('numberOfNewsArticles')
 				var newslength = Homey.manager('settings').get('newslength');
 				var feed = Homey.manager('settings').get('feed');
-				if (feed === undefined || feed === null || feed.length === 0) {
+				if (feed === undefined || feed === null || feed.length <= 7) {
 					feed = 'http://feeds.nos.nl/nosnieuwsalgemeen';
 				}
 				readNews(maxNews, newslength, {
