@@ -11,21 +11,6 @@
 		"email": "info@marcovantklooster.nl",
 		"website": "https://www.marcovantklooster.nl"
 	},
-	"contributors": {
-		"developers": [{
-			"name": "Marco van 't Klooster",
-			"email": "info@marcovantklooster.nl",
-			"website": "https://www.marcovantklooster.nl"
-		}]
-	},
-	"contributing": {
-        "donate": {
-            "paypal": {
-                "username": "kerkenit"
-            }
-        }
-	},
-    "athomForumDiscussionId": 1315,
 	"flow": {
 		"actions": [{
 			"id": "headline",
@@ -172,9 +157,17 @@
 		"developers": [{
 			"name": "Marco van 't Klooster",
 			"email": "info@marcovantklooster.nl",
-			"website": "http://www.marcovantklooster.nl"
+			"website": "https://www.marcovantklooster.nl"
 		}]
 	},
+	"contributing": {
+        "donate": {
+            "paypal": {
+                "username": "kerkenit"
+            }
+        }
+	},
+    "athomForumDiscussionId": 1315,
 	"images": {
 		"large": "./assets/images/large.jpg",
 		"small": "./assets/images/small.jpg"
