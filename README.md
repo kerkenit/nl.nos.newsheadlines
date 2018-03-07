@@ -18,10 +18,6 @@ OK, Homey...
 * Niet Nederlandse woorden kan Homey ook niet goed uitspreken.
 
 
-## Vind je dit leuk?
-Wil je dat ik door ga met het ontwikkelen?
-[![PayPal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/blue-pill-paypal-34px.png)](http://PayPal.Me/KerkEnIT)
-
 # Release Notes
 ## 1.1.0
 * Er zijn nu meerdere actie kaarten te kiezen met de verschillenden lengtes van de uit te spreken teksten.
