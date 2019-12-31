@@ -19,6 +19,9 @@ OK, Homey...
 
 
 # Release Notes
+## 1.1.3
+* HTTP urls zijn verplaatst naar HTTPS
+
 ## 1.1.0
 * Er zijn nu meerdere actie kaarten te kiezen met de verschillenden lengtes van de uit te spreken teksten.
 * Deze nieuwe cards zijn voorzien van een eigen keuze van Nieuws bericht

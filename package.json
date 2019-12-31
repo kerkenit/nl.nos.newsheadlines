@@ -1,0 +1,12 @@
+{
+  "requires": true,
+  "lockfileVersion": 1,
+  "dependencies": {
+    "clarinet": "^0.12.4",
+    "eventyoshi": "^1.0.0",
+    "feedme": "^1.2.0",
+    "html-entities": "^1.2.1",
+    "sax": "^1.2.4",
+    "striptags": "^3.1.1"
+  }
+}
